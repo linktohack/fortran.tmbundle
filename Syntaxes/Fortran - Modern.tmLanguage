@@ -227,7 +227,7 @@
 						</dict>
 					</dict>
 					<key>end</key>
-					<string>\n</string>
+					<string>(?=\n)</string>
 					<key>name</key>
 					<string>comment.line.exclamation.mark.fortran.modern</string>
 					<key>patterns</key>
@@ -267,7 +267,7 @@
 						</dict>
 					</dict>
 					<key>end</key>
-					<string>\n</string>
+					<string>(?=\n)</string>
 					<key>name</key>
 					<string>comment.line.exclamation.fortran.modern</string>
 					<key>patterns</key>
