@@ -12,8 +12,7 @@
 		<integer>1</integer>
 		<key>symbolTransformation</key>
 		<string>
-		s/\!-//; 
-		s/\-/   /g;
+		s/\![-\s]{0,5}/   /; 
 	</string>
 	</dict>
 	<key>uuid</key>
