@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>Symbol List: Add Function/Subroutine/Module Marks</string>
+	<key>scope</key>
+	<string>source.fortran meta.module.begin, source.fortran meta.function.begin</string>
+	<key>settings</key>
+	<dict>
+		<key>showInSymbolList</key>
+		<integer>1</integer>
+		<key>symbolTransformation</key>
+		<string>s/ubroutine\s*/  /i;
+s/unction\s*/  /i;
+s/odule\s*/  /i;
+</string>
+	</dict>
+	<key>uuid</key>
+	<string>b30c44cb-0a6b-4462-9582-68cafd8fed63</string>
+</dict>
+</plist>

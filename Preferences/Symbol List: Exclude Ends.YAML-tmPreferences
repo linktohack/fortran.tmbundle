@@ -1,0 +1,5 @@
+name: 'Symbol List: Exclude Ends '
+scope: source.fortran entity.name.type.end
+settings:
+  showInSymbolList: 0
+uuid: D3D60488-4BDD-468A-B1F4-19CC198D419A

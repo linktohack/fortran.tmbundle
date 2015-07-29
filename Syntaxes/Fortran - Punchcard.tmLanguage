@@ -49,28 +49,35 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>(?x)                             # extended mode
-^
-\s*                              # start of line and possibly some space
-([a-zA-Z\(\)]*)(?i:(?&lt;!end))     # 1: possibly some type specification but not the word end
-\s*                              # possibly some space
-(?i:(function|subroutine))\b     # 2: function or subroutine
-\s+                              # some space
-([A-Za-z_][A-Za-z0-9_]*)         # 3: name
+			<string>(?x)                                  # extended mode
+(                                     # 1: the whole line
+  ^
+  \s*                                 # start of line and possibly some space
+  ([a-zA-Z\(\)]*)(?i:(?&lt;!end))        # 2: possibly some type specification but not the word end
+  \s*                                 # possibly some space
+  (?i:(module))                       # 3: function, subroutine or module
+  \s+                                 # some space
+  ([A-Za-z_][A-Za-z0-9_]*)            # 4: name
+)
 </string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
 				<dict>
 					<key>name</key>
-					<string>storage.type.fortran</string>
+					<string>meta.module.begin.fortran</string>
 				</dict>
 				<key>2</key>
 				<dict>
 					<key>name</key>
-					<string>storage.type.function.fortran</string>
+					<string>keyword.other.fortran</string>
 				</dict>
 				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>storage.type.function.fortran</string>
+				</dict>
+				<key>4</key>
 				<dict>
 					<key>name</key>
 					<string>entity.name.function.fortran</string>
@@ -79,16 +86,17 @@
 			<key>comment</key>
 			<string>First line of function/subroutine definition</string>
 			<key>end</key>
-			<string>(?x)                             # extended mode
+			<string>(?x)                                  # extended mode
 ^
-\s*                              # possibly some space
-((?i:end))                       # 1: the word end
+\s*                                   # possibly some space
+((?i:end))                            # 1: the word end
 \s*
-(                                # followed by
-  $                              # end of line
-  |                              # or
-  (?i:\2)                        # 2: function or subroutine
-  ((\s+[A-Za-z_][A-Za-z0-9_]*)?) # 3: possibly the name
+(                                     # followed by
+  $                                   # end of line
+  |                                   # or
+  (?i:\3)                             # function or subroutine
+  \s+
+  (?i:\4)?                            # the name
 )
 </string>
 			<key>endCaptures</key>
@@ -98,15 +106,79 @@
 					<key>name</key>
 					<string>keyword.other.fortran</string>
 				</dict>
+			</dict>
+			<key>name</key>
+			<string>meta.module.fortran</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>$self</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>source.fortran.modern</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>(?x)                                  # extended mode
+(                                     # 1: the whole line
+  ^
+  \s*                                 # start of line and possibly some space
+  ([a-zA-Z\(\)]*)(?i:(?&lt;!end))        # 2: possibly some type specification but not the word end
+  \s*                                 # possibly some space
+  (?i:(function|subroutine))          # 3: function or subroutine
+  \s+                                 # some space
+  ([A-Za-z_][A-Za-z0-9_]*)            # 4: name
+)
+</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>meta.function.begin.fortran</string>
+				</dict>
 				<key>2</key>
 				<dict>
 					<key>name</key>
-					<string>storage.type.function.fortran</string>
+					<string>keyword.other.fortran</string>
 				</dict>
 				<key>3</key>
 				<dict>
 					<key>name</key>
-					<string>entity.name.function.end.fortran</string>
+					<string>storage.type.function.fortran</string>
+				</dict>
+				<key>4</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.function.fortran</string>
+				</dict>
+			</dict>
+			<key>comment</key>
+			<string>First line of function/subroutine definition</string>
+			<key>end</key>
+			<string>(?x)                                  # extended mode
+^
+\s*                                   # possibly some space
+((?i:end))                            # 1: the word end
+\s*
+(                                     # followed by
+  $                                   # end of line
+  |                                   # or
+  (?i:\3)                             # function or subroutine
+  \s+
+  (?i:\4)?                            # the name
+)
+</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.other.fortran</string>
 				</dict>
 			</dict>
 			<key>name</key>

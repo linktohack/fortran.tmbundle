@@ -5,7 +5,7 @@
 	<key>name</key>
 	<string>Symbol List: Exclude Ends </string>
 	<key>scope</key>
-	<string>source.fortran entity.name.function.end, source.fortran entity.name.type.end</string>
+	<string>source.fortran entity.name.type.end</string>
 	<key>settings</key>
 	<dict>
 		<key>showInSymbolList</key>

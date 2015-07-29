@@ -1,0 +1,9 @@
+name: 'Symbol List: Add Function/Subroutine/Module Marks'
+scope: source.fortran meta.module.begin, source.fortran meta.function.begin
+settings:
+  showInSymbolList: 1
+  symbolTransformation: |
+    s/ubroutine\s*/  /i;
+    s/unction\s*/  /i;
+    s/odule\s*/  /i;
+uuid: b30c44cb-0a6b-4462-9582-68cafd8fed63

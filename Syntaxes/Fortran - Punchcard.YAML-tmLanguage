@@ -21,41 +21,83 @@ patterns:
   match: \b[\+\-]?[0-9]+\.?[0-9a-zA-Z_]*\b
   name: constant.numeric.fortran
 - begin: |
-    (?x)                             # extended mode
-    ^
-    \s*                              # start of line and possibly some space
-    ([a-zA-Z\(\)]*)(?i:(?<!end))     # 1: possibly some type specification but not the word end
-    \s*                              # possibly some space
-    (?i:(function|subroutine))\b     # 2: function or subroutine
-    \s+                              # some space
-    ([A-Za-z_][A-Za-z0-9_]*)         # 3: name
+    (?x)                                  # extended mode
+    (                                     # 1: the whole line
+      ^
+      \s*                                 # start of line and possibly some space
+      ([a-zA-Z\(\)]*)(?i:(?<!end))        # 2: possibly some type specification but not the word end
+      \s*                                 # possibly some space
+      (?i:(module))                       # 3: function, subroutine or module
+      \s+                                 # some space
+      ([A-Za-z_][A-Za-z0-9_]*)            # 4: name
+    )
   beginCaptures:
     '1':
-      name: storage.type.fortran
+      name: meta.module.begin.fortran
     '2':
-      name: storage.type.function.fortran
+      name: keyword.other.fortran
     '3':
+      name: storage.type.function.fortran
+    '4':
       name: entity.name.function.fortran
   comment: First line of function/subroutine definition
   end: |
-    (?x)                             # extended mode
+    (?x)                                  # extended mode
     ^
-    \s*                              # possibly some space
-    ((?i:end))                       # 1: the word end
+    \s*                                   # possibly some space
+    ((?i:end))                            # 1: the word end
     \s*
-    (                                # followed by
-      $                              # end of line
-      |                              # or
-      (?i:\2)                        # 2: function or subroutine
-      ((\s+[A-Za-z_][A-Za-z0-9_]*)?) # 3: possibly the name
+    (                                     # followed by
+      $                                   # end of line
+      |                                   # or
+      (?i:\3)                             # function or subroutine
+      \s+
+      (?i:\4)?                            # the name
     )
   endCaptures:
     '1':
       name: keyword.other.fortran
+  name: meta.module.fortran
+  patterns:
+  - include: $self
+  - include: source.fortran.modern
+- begin: |
+    (?x)                                  # extended mode
+    (                                     # 1: the whole line
+      ^
+      \s*                                 # start of line and possibly some space
+      ([a-zA-Z\(\)]*)(?i:(?<!end))        # 2: possibly some type specification but not the word end
+      \s*                                 # possibly some space
+      (?i:(function|subroutine))          # 3: function or subroutine
+      \s+                                 # some space
+      ([A-Za-z_][A-Za-z0-9_]*)            # 4: name
+    )
+  beginCaptures:
+    '1':
+      name: meta.function.begin.fortran
     '2':
-      name: storage.type.function.fortran
+      name: keyword.other.fortran
     '3':
-      name: entity.name.function.end.fortran
+      name: storage.type.function.fortran
+    '4':
+      name: entity.name.function.fortran
+  comment: First line of function/subroutine definition
+  end: |
+    (?x)                                  # extended mode
+    ^
+    \s*                                   # possibly some space
+    ((?i:end))                            # 1: the word end
+    \s*
+    (                                     # followed by
+      $                                   # end of line
+      |                                   # or
+      (?i:\3)                             # function or subroutine
+      \s+
+      (?i:\4)?                            # the name
+    )
+  endCaptures:
+    '1':
+      name: keyword.other.fortran
   name: meta.function.fortran
   patterns:
   - begin: \G\s*(\()
