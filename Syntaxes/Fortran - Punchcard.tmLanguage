@@ -52,7 +52,7 @@
 			<string>(?x)                             # extended mode
 ^
 \s*                              # start of line and possibly some space
-([a-zA-Z\(\)]*)(?&lt;!end)          # 1: possibly some type specification but not the word end
+([a-zA-Z\(\)]*)(?i:(?&lt;!end))     # 1: possibly some type specification but not the word end
 \s*                              # possibly some space
 (?i:(function|subroutine))\b     # 2: function or subroutine
 \s+                              # some space
@@ -80,12 +80,14 @@
 			<string>First line of function/subroutine definition</string>
 			<key>end</key>
 			<string>(?x)                             # extended mode
+^
+\s*                              # possibly some space
 ((?i:end))                       # 1: the word end
+\s*
 (                                # followed by
   $                              # end of line
   |                              # or
-  \s*                            # possibly some space
-  (?i:(function|subroutine))     # 2: function or subroutine
+  (?i:\2)                        # 2: function or subroutine
   ((\s+[A-Za-z_][A-Za-z0-9_]*)?) # 3: possibly the name
 )
 </string>
@@ -96,12 +98,12 @@
 					<key>name</key>
 					<string>keyword.other.fortran</string>
 				</dict>
-				<key>3</key>
+				<key>2</key>
 				<dict>
 					<key>name</key>
 					<string>storage.type.function.fortran</string>
 				</dict>
-				<key>4</key>
+				<key>3</key>
 				<dict>
 					<key>name</key>
 					<string>entity.name.function.end.fortran</string>

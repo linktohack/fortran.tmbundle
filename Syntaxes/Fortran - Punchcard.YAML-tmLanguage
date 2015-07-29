@@ -24,7 +24,7 @@ patterns:
     (?x)                             # extended mode
     ^
     \s*                              # start of line and possibly some space
-    ([a-zA-Z\(\)]*)(?<!end)          # 1: possibly some type specification but not the word end
+    ([a-zA-Z\(\)]*)(?i:(?<!end))     # 1: possibly some type specification but not the word end
     \s*                              # possibly some space
     (?i:(function|subroutine))\b     # 2: function or subroutine
     \s+                              # some space
@@ -39,20 +39,22 @@ patterns:
   comment: First line of function/subroutine definition
   end: |
     (?x)                             # extended mode
+    ^
+    \s*                              # possibly some space
     ((?i:end))                       # 1: the word end
+    \s*
     (                                # followed by
       $                              # end of line
       |                              # or
-      \s*                            # possibly some space
-      (?i:(function|subroutine))     # 2: function or subroutine
+      (?i:\2)                        # 2: function or subroutine
       ((\s+[A-Za-z_][A-Za-z0-9_]*)?) # 3: possibly the name
     )
   endCaptures:
     '1':
       name: keyword.other.fortran
-    '3':
+    '2':
       name: storage.type.function.fortran
-    '4':
+    '3':
       name: entity.name.function.end.fortran
   name: meta.function.fortran
   patterns:
